@@ -8,11 +8,13 @@ public class StalkerBehavior : MonoBehaviour {
     public float stalkSpeed;
     public float targetViewDistance;
     Renderer renderer;
+    public float floatHeight;//the height that the quad floats above the ground at all times
 
     void Start () {
-        stopDistance = 2.0f;
+        stopDistance = 1.0f;
         stalkSpeed = 0.0008f;
         targetViewDistance = 10f;
+        floatHeight = transform.position.y;
         renderer = GetComponent<Renderer>();
     }
 	
@@ -23,7 +25,7 @@ public class StalkerBehavior : MonoBehaviour {
         MoveTowardsTarget();
     }
 
-    void MoveTowardsTarget()
+    public void MoveTowardsTarget()
     {
         if (isInPlayerView())
             return;
@@ -33,9 +35,9 @@ public class StalkerBehavior : MonoBehaviour {
         {
             //move the stalker in X and Z
             Vector3 direction = followTarget.transform.position - transform.position;
-            direction = Vector3.ClampMagnitude(direction * stalkSpeed, 1.0f);
+            direction = Vector3.ClampMagnitude(direction * stalkSpeed, stalkSpeed);
             transform.Translate(direction, Space.World);
-            transform.position = new Vector3(transform.position.x, 0.661f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, floatHeight, transform.position.z);
         }
         else
         {
@@ -43,7 +45,7 @@ public class StalkerBehavior : MonoBehaviour {
         }
     }
 
-    bool isInPlayerView()
+    public bool isInPlayerView()
     {
         if(Vector3.Distance(transform.position, followTarget.transform.position) > targetViewDistance)
             return false;//if too far, move regardless of visibility
@@ -52,8 +54,9 @@ public class StalkerBehavior : MonoBehaviour {
         return false;//otherwise, move
     }
 
-    void triggerGameOver()
+    public void triggerGameOver()
     {
+        //handle game over
         print("GAME OVER");
     }
 

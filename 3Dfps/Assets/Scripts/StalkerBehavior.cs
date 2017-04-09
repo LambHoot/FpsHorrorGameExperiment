@@ -12,7 +12,7 @@ public class StalkerBehavior : MonoBehaviour {
 
     void Start () {
         stopDistance = 1.0f;
-        stalkSpeed = 0.0008f;
+        stalkSpeed = 0.0118f;
         targetViewDistance = 10f;
         floatHeight = transform.position.y;
         renderer = GetComponent<Renderer>();
